@@ -1,0 +1,63 @@
+name: "Validate and Deploy AWS Resources"
+
+
+on:
+    pull_request:
+        branches:
+            - dev 
+            - main
+
+
+
+jobs:
+    validation:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v4
+
+            - name: Setup Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: "3.11"
+
+            - name: Run Helper Script
+              run: |
+                cd helper_scripts
+                python3 replace_placeholders.py
+
+            - name: Make IAC artifact
+              uses: actions/upload-artifact@v3
+              with:
+                name: updated-terraform-files
+                path: iac/
+
+            - name: Terraform Setup
+              uses: hashicorp/setup-terraform@v2
+
+            -  name: Validate Terraform
+               run: |
+                cd iac
+                terraform init
+                terraform validate
+    deployment:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v4
+
+            - name: Download Updated Terraform Files
+              uses: actions/download-artifact@v3
+              with:
+                name: updated-terraform-files
+                path: iac 
+            
+
+            - name: Setup Terraform
+              uses: hashicrop/setup-terraform@v2
+
+            - name: Apply AWS Resources
+              run: |
+                cd iac
+                terraform init
+                terraform apply -auto-approve
