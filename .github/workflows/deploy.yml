@@ -60,7 +60,7 @@ jobs:
             
 
             - name: Setup Terraform
-              uses: hashicrop/setup-terraform@v2
+              uses: hashicorp/setup-terraform@v2
 
             - name: Apply AWS Resources
               run: |
