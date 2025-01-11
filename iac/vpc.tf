@@ -13,6 +13,8 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "public" {
   vpc_id     = aws_vpc.main.id
   cidr_block = var.pub_sub_cidr
+  map_public_ip_on_launch = true
+
 
   tags = {
     Name = "Public Subnet"
@@ -26,7 +28,7 @@ resource "aws_subnet" "private" {
   cidr_block = var.priv_sub_cidr
 
   tags = {
-    Name = "Public Subnet"
+    Name = "Private Subnet"
     Environment = "${var.env}"
   }
 }
