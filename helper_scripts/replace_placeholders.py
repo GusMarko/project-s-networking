@@ -14,11 +14,6 @@ def main():
 
 
 def replace_placeholders(env):
-    env = env
-    access_key = ACCESS_KEY
-    secret_key = SECRET_KEY
-    region = AWS_REGION
-
     tfvars_path = "../iac/terraform.tfvars"
     backend_path = "../iac/provider.tf"
 

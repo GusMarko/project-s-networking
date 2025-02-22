@@ -5,17 +5,17 @@ variable "vpc_cidr_block" {
 
 variable "pub_sub_cidr" {
   type = string
-  description = "Public subnet of project VPC"
+  description = "public subnet cidr block"
 }
 
 variable "priv_sub_cidr" {
   type = string
-  description = "Private subnet of project VPC"
+  description = "private subnet cidr block"
 }
 
 variable "env" {
   type = string
-  description = "Current branch - used in tags imported thru helper script"
+  description = "current branch/environment - used in tags imported thru helper script"
 }
 
 variable "aws_region" {
@@ -24,10 +24,10 @@ variable "aws_region" {
 
 variable "access_key" {
   type = string
-  description = "AWS Credentials"
+  description = "AWS credentials"
 }
 
 variable "secret_key" {
   type = string
-  description = "AWS Credentials"
+  description = "AWS credentials"
 }
