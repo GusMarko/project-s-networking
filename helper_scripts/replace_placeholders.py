@@ -12,8 +12,19 @@ def main():
     replace_placeholders(env)
 
 
-
 def replace_placeholders(env):
+    # environment specific variables    
+    if env == "dev":
+        vpc_cidr = "10.0.1.0/24"
+        pub_cidr = "10.0.1.0/25"
+        priv_cidr = "10.0.1.128/25"
+    elif env == "main":
+        vpc_cidr = "10.0.2.0/24"
+        pub_cidr = "10.0.2.0/25"
+        priv_cidr = "10.0.2.128/25"
+    else:
+        print("invalid environment")
+
     tfvars_path = "../iac/terraform.tfvars"
     backend_path = "../iac/provider.tf"
 
@@ -23,6 +34,10 @@ def replace_placeholders(env):
     tfvars = tfvars.replace("secret_key_placeholder", str(SECRET_KEY))
     tfvars = tfvars.replace("env_placeholder", str(env))
     tfvars = tfvars.replace("aws_region_placeholder", str(AWS_REGION))
+    tfvars = tfvars.replace("vpc_cidr_placeholder", str(vpc_cidr))
+    tfvars = tfvars.replace("priv_cidr_placeholder", str(priv_cidr))
+    tfvars = tfvars.replace("pub_cidr_placeholder", str(pub_cidr))
+
     with open(tfvars_path, "w") as f:
         f.write(tfvars)
 
