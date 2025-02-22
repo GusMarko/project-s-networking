@@ -1,7 +1,7 @@
 terraform {
     backend "s3"{
         bucket = "mg-terraform-state-storage"
-        key = "project-s-networking/terraform.tfstate"
+        key = "key_placeholder"
         region = "aws_region_placeholder"
         access_key = "access_key_placeholder"
         secret_key = "secret_key_placeholder"

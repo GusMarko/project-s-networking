@@ -46,6 +46,7 @@ def replace_placeholders(env):
     backend_config = backend_config.replace("access_key_placeholder", str(ACCESS_KEY))
     backend_config = backend_config.replace("secret_key_placeholder", str(SECRET_KEY))
     backend_config = backend_config.replace("aws_region_placeholder", str(AWS_REGION))
+    backend_config = backend_config.replace("key_placeholder", f"project-s-networking/{env}/terraform.tfstate")
     with open(backend_path, "w") as f:
         f.write(backend_config) 
 
