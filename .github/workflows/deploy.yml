@@ -29,7 +29,7 @@ jobs:
           python3 replace_placeholders.py
 
       - name: Make IAC artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: updated-terraform-files
           path: iac/
@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download Updated Terraform Files
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: updated-terraform-files
           path: iac
