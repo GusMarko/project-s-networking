@@ -1,4 +1,4 @@
-name: "Validate and Deploy Terraform Code"
+name: "Validate and Deploy terraform code"
 
 on:
   pull_request:
@@ -27,23 +27,20 @@ jobs:
         run: |
           cd helper_scripts
           python3 replace_placeholders.py
+      - name: Make IAC artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: updated-terraform-files
+          path: iac/
 
       - name: Terraform Setup
         uses: hashicorp/setup-terraform@v2
 
-      - name: Terraform Init, Validate, and Plan
+      - name: Validate Terraform
         run: |
           cd iac
           terraform init
           terraform validate
-          terraform plan -out=terraform.plan
-
-      - name: Upload Terraform Plan
-        uses: actions/upload-artifact@v4
-        with:
-          name: terraform-plan
-          path: iac/terraform.plan
-
   deployment:
     runs-on: ubuntu-latest
     needs: validation
@@ -51,21 +48,17 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Download Terraform Plan
+      - name: Download Updated Terraform Files
         uses: actions/download-artifact@v4
         with:
-          name: terraform-plan
+          name: updated-terraform-files
           path: iac
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
-      - name: Initialize Terraform
-        run: |
-                cd iac
-                terraform init
-
       - name: Apply AWS Resources
         run: |
           cd iac
-          terraform apply -auto-approve terraform.plan
+          terraform init
+          terraform destroy -auto-approve
