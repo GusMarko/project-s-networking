@@ -27,7 +27,6 @@ jobs:
         run: |
           cd helper_scripts
           python3 replace_placeholders.py
-
       - name: Make IAC artifact
         uses: actions/upload-artifact@v4
         with:
@@ -62,4 +61,4 @@ jobs:
         run: |
           cd iac
           terraform init
-          terraform apply -auto-approve
+          terraform destroy -auto-approve
