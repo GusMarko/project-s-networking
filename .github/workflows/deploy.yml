@@ -60,6 +60,11 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
+      - name: Initialize Terraform
+        run: |
+                cd iac
+                terraform init
+
       - name: Apply AWS Resources
         run: |
           cd iac
